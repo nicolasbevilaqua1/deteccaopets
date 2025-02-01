@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detecção de Flocos</title>
+  <!-- Importando Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Detecção de Flocos</h1>
+      <p class="tagline">Tecnologia que entende a fofura do seu pet!</p>
+    </header>
+
+    <div id="status" class="status">Status: Aguardando inicialização...</div>
+    
+    <div class="video-container">
+      <canvas id="canvas"></canvas>
+      <!-- Vídeo oculto para captura da câmera -->
+      <video id="video" autoplay playsinline style="display: none;"></video>
+    </div>
+
+    <div id="controls" class="controls">
+      <button id="startBtn" class="btn primary">Iniciar Detecção</button>
+      <button id="resetBtn" class="btn secondary">Resetar</button>
+    </div>
+
+    <section class="panel">
+      <h2>Histórico de Detecções</h2>
+      <ul id="history"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Estatísticas</h2>
+      <table id="stats">
+        <thead>
+          <tr>
+            <th>Objeto</th>
+            <th>Contagem</th>
+          </tr>
+        </thead>
+        <tbody id="statsBody"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Importando TensorFlow.js e o modelo COCO-SSD -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+  <script src="script.js"></script>
+</body>
+</html>

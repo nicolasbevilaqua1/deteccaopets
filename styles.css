@@ -1,0 +1,140 @@
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Fonte e cores */
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: #eef2f3;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+  
+  header .tagline {
+    font-size: 1.1em;
+    color: #7f8c8d;
+  }
+  
+  .status {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #dfe6e9;
+    border-radius: 4px;
+  }
+  
+  .video-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #canvas {
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+  }
+  
+  /* Controles */
+  .controls {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 0 8px;
+    transition: background 0.3s ease;
+  }
+  
+  .btn.primary {
+    background: #3498db;
+    color: #fff;
+  }
+  
+  .btn.primary:hover {
+    background: #2980b9;
+  }
+  
+  .btn.secondary {
+    background: #e74c3c;
+    color: #fff;
+  }
+  
+  .btn.secondary:hover {
+    background: #c0392b;
+  }
+  
+  /* Painéis para histórico e estatísticas */
+  .panel {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  .panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #2c3e50;
+    border-bottom: 1px solid #dcdde1;
+    padding-bottom: 5px;
+  }
+  
+  #history {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  #history li {
+    padding: 8px 10px;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  #stats {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #stats th, #stats td {
+    border: 1px solid #bdc3c7;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  #stats th {
+    background: #ecf0f1;
+    font-weight: 600;
+  }
+  

@@ -7,20 +7,16 @@ const statsBody = document.getElementById("statsBody");
 const startBtn = document.getElementById("startBtn");
 const resetBtn = document.getElementById("resetBtn");
 
-// Listas de áudios para cada pet
-const dogAudios = ["dog1.mp3", "dog2.mp3", "dog3.mp3"];
-const catAudios = ["cat1.mp3", "cat2.mp3", "cat3.mp3"];
+// Lista de áudios para cachorros
+const dogAudios = ["dog1.mp3", "dog2.mp3", "dog3.mp3", "dog4.mp3", "dog5.mp3", "dog6.mp3", "dog7.mp3", "dog8.mp3", "dog9.mp3", "dog10.mp3", "dog11.mp3", "dog12.mp3"];
 
 // Carrega os áudios previamente para evitar bloqueios no Safari
-let preloadedAudios = {
-  dog: dogAudios.map(src => new Audio(src)),
-  cat: catAudios.map(src => new Audio(src))
-};
+let preloadedAudios = dogAudios.map(src => new Audio(src));
 
-// Função para obter e tocar um áudio aleatório com tratamento para iOS
-function playRandomAudio(audioList) {
-  const randomIndex = Math.floor(Math.random() * audioList.length);
-  const audio = preloadedAudios[audioList][randomIndex];
+// Função para tocar um áudio aleatório
+function playRandomAudio() {
+  const randomIndex = Math.floor(Math.random() * dogAudios.length);
+  const audio = preloadedAudios[randomIndex];
 
   audio.play().catch(error => {
     console.warn("Reprodução de áudio bloqueada. Esperando interação do usuário.");
@@ -31,7 +27,7 @@ let model;
 let detectedObjects = new Set();
 let objectStats = {};
 
-// Controle de cooldown
+// Controle de cooldown para áudios
 let lastAudioTimestamp = 0;
 const audioCooldown = 10000;
 
@@ -80,7 +76,7 @@ function updateStats(objectName) {
   });
 }
 
-// Função para detectar objetos
+// Função para detectar apenas cachorros
 async function detectObjects() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
@@ -95,11 +91,9 @@ async function detectObjects() {
   ctx.strokeStyle = "#2980b9";
   ctx.lineWidth = 2;
 
-  const petPredictions = predictions.filter(prediction =>
-    prediction.class === "dog" || prediction.class === "cat"
-  );
+  const dogPredictions = predictions.filter(prediction => prediction.class === "dog");
 
-  petPredictions.forEach(prediction => {
+  dogPredictions.forEach(prediction => {
     const [x, y, width, height] = prediction.bbox;
     ctx.strokeRect(x, y, width, height);
     ctx.fillText(`${prediction.class} (${Math.round(prediction.score * 100)}%)`, x, y > 24 ? y - 5 : 24);
@@ -108,17 +102,16 @@ async function detectObjects() {
     updateStats(prediction.class);
   });
 
-  if (petPredictions.length > 0 && Date.now() - lastAudioTimestamp > audioCooldown) {
-    const detectedClass = petPredictions[0].class;
-    playRandomAudio(detectedClass);
+  if (dogPredictions.length > 0 && Date.now() - lastAudioTimestamp > audioCooldown) {
+    playRandomAudio();
     lastAudioTimestamp = Date.now();
   }
 
-  statusDiv.innerText = `Pets detectados: ${petPredictions.length}`;
+  statusDiv.innerText = `Dogs detectados: ${dogPredictions.length}`;
   requestAnimationFrame(detectObjects);
 }
 
-// Evento para o botão de iniciar (ativa o áudio via clique)
+// Evento para iniciar a detecção
 startBtn.addEventListener("click", async () => {
   startBtn.disabled = true;
   statusDiv.innerText = "Status: Carregando modelo...";
@@ -126,8 +119,8 @@ startBtn.addEventListener("click", async () => {
   await setupCamera();
   await loadModel();
 
-  // Requisita permissão para o áudio (necessário no Safari)
-  preloadedAudios.dog[0].play().then(() => {
+  // Pré-carregar áudio para evitar bloqueios
+  preloadedAudios[0].play().then(() => {
     console.log("Áudio pré-carregado com sucesso.");
   }).catch(error => {
     console.warn("Áudio bloqueado. Será necessário um clique manual.");
@@ -136,7 +129,7 @@ startBtn.addEventListener("click", async () => {
   detectObjects();
 });
 
-// Evento para o botão de resetar
+// Evento para resetar histórico e estatísticas
 resetBtn.addEventListener("click", () => {
   detectedObjects.clear();
   objectStats = {};
